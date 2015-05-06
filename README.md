@@ -50,13 +50,22 @@ blobs/
 3 directories, 3 files
 ```
 
-Download dependencies from:
-* cfops_linux_amd64.tar.gz:
-http://s3.amazonaws.com/pivotal-cfops/release/v0.0.30/cfops_linux_amd64.tar.gz
-* openjdk-1.8.0_25.tar.gz:
-https://download.run.pivotal.io/openjdk-jdk/trusty/x86_64/openjdk-1.8.0_25.tar.gz
-* s3-cli-0.1.0-package.tar.gz:
-https://repo.forge.lmig.com/content/repositories/ets-releases/com/lmig/cloudfoundry/backup/s3/s3-cli/0.1.0/s3-cli-0.1.0-package.tar.gz
+Download and add dependencies:
+* [cfops_linux_amd64.tar.gz](http://s3.amazonaws.com/pivotal-cfops/release/v0.0.57/cfops_linux_amd64.tar.gz)
+```
+wget http://s3.amazonaws.com/pivotal-cfops/release/v0.0.57/cfops_linux_amd64.tar.gz -O cfops_linux_amd64-0.0.57.tar.gz
+bosh add blob cfops_linux_amd64-0.0.57.tar.gz cfops_linux_amd64
+```
+* [openjdk-1.8.0_25.tar.gz](https://download.run.pivotal.io/openjdk-jdk/trusty/x86_64/openjdk-1.8.0_25.tar.gz)
+```
+wget https://download.run.pivotal.io/openjdk-jdk/trusty/x86_64/openjdk-1.8.0_25.tar.gz
+bosh add blob openjdk-1.8.0_25.tar.gz openjdk-1.8.0_25
+```
+* [s3-cli-0.1.0-package.tar.gz](https://repo.forge.lmig.com/content/repositories/ets-releases/com/lmig/cloudfoundry/backup/s3/s3-cli/0.1.0/s3-cli-0.1.0-package.tar.gz)
+```
+wget https://repo.forge.lmig.com/content/repositories/ets-releases/com/lmig/cloudfoundry/backup/s3/s3-cli/0.1.0/s3-cli-0.1.0-package.tar.gz
+bosh add blob s3-cli-0.1.0-package.tar.gz s3-cli-0.1.0
+```
 
 #### Upload the PCF Backup release
 
