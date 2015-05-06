@@ -1,0 +1,7 @@
+---
+name: cfops
+
+dependencies: []
+
+files:
+- cfops_linux_amd64/cfops_linux_amd64-0.0.30.tar.gz

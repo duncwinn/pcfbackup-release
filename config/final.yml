@@ -1,0 +1,6 @@
+---
+blobstore:
+  provider: local
+  options:
+    blobstore_path: /tmp/cfbackup-blobs
+final_name: cfbackup_blobstore

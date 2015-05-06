@@ -1,0 +1,53 @@
+#!/bin/bash
+
+RUN_DIR='/var/vcap/sys/run/cfbackup'
+LOG_DIR='/var/vcap/sys/log/cfbackup'
+PIDFILE="$RUN_DIR/pid"
+
+CRON_ENTRY=$(cat /var/vcap/jobs/cfbackup/config/backup.cron)
+CRONTAB_TMP="$RUN_DIR/crontab.$$.tmp"
+
+case $1 in
+
+  start)
+
+    mkdir -p "$RUN_DIR" "$LOG_DIR"
+    chown -R vcap:vcap "$RUN_DIR" "$LOG_DIR"
+
+    echo $$ > $PIDFILE
+
+    if crontab -l | sed -e 's/^#.*//' | grep "$CRON_ENTRY" 2>&1>/dev/null; then
+      echo 'Already running'
+    else
+      crontab -l > "$CRONTAB_TMP"
+      echo "$CRON_ENTRY" >> "$CRONTAB_TMP"
+      crontab < "$CRONTAB_TMP"
+    #   rm "$CRONTAB_TMP"
+    fi
+
+    while true; do
+      sleep 60
+    done
+
+    ;;
+
+  stop)
+
+    if crontab -l | sed -e 's/^#.*//' | grep "$CRON_ENTRY" 2>&1>/dev/null; then
+      crontab -l | grep -v "$CRON_ENTRY" > "$CRONTAB_TMP"
+      crontab < "$CRONTAB_TMP"
+    #   rm "$CRONTAB_TMP"
+    else
+      echo 'Not running'
+    fi
+
+    kill -TERM $(cat "$PIDFILE")
+
+    rm -f $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

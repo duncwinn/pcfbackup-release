@@ -1,0 +1,23 @@
+#!/bin/bash
+
+export PATH=/var/vcap/packages/s3-cli/java/bin:$PATH
+export JAVA_HOME=/var/vcap/packages/s3-cli/java
+
+# this would run a backup
+/var/vcap/packages/cfops/cfops_linux_amd64/cfops backup \
+    -host <%= p("backup.ops_manager.host") %> \
+    -u <%= p("backup.ops_manager.username") %> \
+    -p <%= p("backup.ops_manager.password") %> \
+    -tp <%= p("backup.ops_manager.tempest_password") %> \
+    -d /var/vcap/data/jobs/cfbackup/
+
+# this would upload the backup to an S3 bucket
+/var/vcap/packages/s3-cli/cli/bin/s3 \
+    --access-key-id <%= p("backup.s3.access-key-id") %> \
+    --secret-access-key <%= p("backup.s3.secret-access-key") %> \
+    --bucket <%= p("backup.s3.bucket") %> \
+    --folder <%= p("backup.s3.folder") %> \
+    --file /var/vcap/data/jobs/cfbackup/somethingFromLastCommand \
+    --proxy-host <%= p("backup.s3.proxy-host") %> \
+    --proxy-port <%= p("backup.s3.proxy-port") %> \
+    --kms-key-id <%= p("backup.s3.kms-key-id") %>
