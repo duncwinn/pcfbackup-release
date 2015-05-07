@@ -56,11 +56,6 @@ Download and add dependencies:
 wget http://s3.amazonaws.com/pivotal-cfops/release/v0.0.57/cfops_linux_amd64.tar.gz -O cfops_linux_amd64-0.0.57.tar.gz
 bosh add blob cfops_linux_amd64-0.0.57.tar.gz cfops_linux_amd64
 ```
-* [openjdk-1.8.0_25.tar.gz](https://download.run.pivotal.io/openjdk-jdk/trusty/x86_64/openjdk-1.8.0_25.tar.gz)
-```
-wget https://download.run.pivotal.io/openjdk-jdk/trusty/x86_64/openjdk-1.8.0_25.tar.gz
-bosh add blob openjdk-1.8.0_25.tar.gz openjdk-1.8.0_25
-```
 * [Python-2.7.8.tgz](https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz)
 ```
 wget https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz
