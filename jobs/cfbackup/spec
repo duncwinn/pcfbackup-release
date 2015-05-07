@@ -8,7 +8,8 @@ templates:
 
 packages:
 - cfops
-- s3-cli
+- aws-cli
+- python
 
 properties:
   backup.ops_manager.schedule:
@@ -31,10 +32,12 @@ properties:
     description: AWS access key ID
   backup.s3.secret-access-key:
     description: AWS secret access key
+  backup.s3.region:
+    description: AWS default region
+    default: "us-east-1"
   backup.s3.kms-key-id:
     description: AWS Key Management Service Key Id
   backup.s3.proxy-host:
     description: proxy host
   backup.s3.proxy-port:
     description: proxy port
-  

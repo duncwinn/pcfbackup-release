@@ -1,22 +1,21 @@
-
+---
 name: pcfbackup
-director_uuid: c6f166bd-ddac-4f7d-9c57-d11c6ad5133b
+director_uuid: 845bd688-885c-4a1a-9cc3-5e133121884b
 
 properties:
   backup:
     ops_manager:
       tempest_password: secretTempest
       password: consoleSecret
-      host: example.lmig.com
+      host: opsmgr.cf.nono.com
     s3:
-      bucket: ets-pcf-1
-      folder: backup/spike
+      bucket: markalston
+      # folder: backup/spike
       access-key-id: secret
       secret-access-key: secret
-      kms-key-id: "arn:aws:kms:us-east-1:697686265700:key/d3d70250-6d89-4e92-8856-42285c93c78a"
-      proxy-host: www-proxy.lmig.com # use app in real envs
-      proxy-port: 80
-
+      # kms-key-id: "arn:aws:kms:us-east-1:697686265700:key/d3d70250-6d89-4e92-8856-42285c93c78a"
+      # proxy-host: www-proxy.lmig.com # use app in real envs
+      # proxy-port: 80
 
 releases:
 - name: cfbackup
