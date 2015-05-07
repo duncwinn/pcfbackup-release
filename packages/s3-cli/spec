@@ -1,8 +1,0 @@
----
-name: s3-cli
-
-dependencies:
-
-files:
-- openjdk-1.8.0_25/openjdk-1.8.0_25.tar.gz
-- s3-cli-0.1.0/s3-cli-0.1.0-package.tar.gz
