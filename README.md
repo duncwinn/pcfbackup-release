@@ -61,10 +61,15 @@ bosh add blob cfops_linux_amd64-0.0.57.tar.gz cfops_linux_amd64
 wget https://download.run.pivotal.io/openjdk-jdk/trusty/x86_64/openjdk-1.8.0_25.tar.gz
 bosh add blob openjdk-1.8.0_25.tar.gz openjdk-1.8.0_25
 ```
-* [s3-cli-0.1.0-package.tar.gz](https://repo.forge.lmig.com/content/repositories/ets-releases/com/lmig/cloudfoundry/backup/s3/s3-cli/0.1.0/s3-cli-0.1.0-package.tar.gz)
+* [Python-2.7.8.tgz](https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz)
 ```
-wget https://repo.forge.lmig.com/content/repositories/ets-releases/com/lmig/cloudfoundry/backup/s3/s3-cli/0.1.0/s3-cli-0.1.0-package.tar.gz
-bosh add blob s3-cli-0.1.0-package.tar.gz s3-cli-0.1.0
+wget https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz
+bosh add blob Python-2.7.8.tgz python
+```
+* [awscli-bundle.zip](https://s3.amazonaws.com/aws-cli/awscli-bundle.zip)
+```
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+bosh add blob awscli-bundle.zip aws-cli
 ```
 
 #### Upload the PCF Backup release
