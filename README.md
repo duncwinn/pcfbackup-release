@@ -108,7 +108,7 @@ Make sure you update the director_uuid in manifests/pcfbackup-warden.yml to
 match your local director's uuid (run bosh status to see details).  
 
 ```
-bosh deploy
+bosh -n deploy
 ```
 
 ## Create a new dev releases
@@ -131,5 +131,5 @@ bosh upload release
 * Deploy the release
 
 ```
-bosh deploy
+bosh -n deploy
 ```
