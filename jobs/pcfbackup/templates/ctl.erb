@@ -1,10 +1,10 @@
 #!/bin/bash
 
-RUN_DIR='/var/vcap/sys/run/cfbackup'
-LOG_DIR='/var/vcap/sys/log/cfbackup'
+RUN_DIR='/var/vcap/sys/run/pcfbackup'
+LOG_DIR='/var/vcap/sys/log/pcfbackup'
 PIDFILE="$RUN_DIR/pid"
 
-CRON_ENTRY=$(cat /var/vcap/jobs/cfbackup/config/backup.cron)
+CRON_ENTRY=$(cat /var/vcap/jobs/pcfbackup/config/backup.cron)
 CRONTAB_TMP="$RUN_DIR/crontab.$$.tmp"
 
 case $1 in
@@ -19,10 +19,10 @@ case $1 in
     if crontab -l | sed -e 's/^#.*//' | grep "$CRON_ENTRY" 2>&1>/dev/null; then
       echo 'Already running'
     else
-      crontab -l > "$CRONTAB_TMP"
+      crontab -l | grep -v "$CRON_ENTRY" > "$CRONTAB_TMP"
       echo "$CRON_ENTRY" >> "$CRONTAB_TMP"
       crontab < "$CRONTAB_TMP"
-    #   rm "$CRONTAB_TMP"
+      rm "$CRONTAB_TMP"
     fi
 
     while true; do
@@ -36,7 +36,7 @@ case $1 in
     if crontab -l | sed -e 's/^#.*//' | grep "$CRON_ENTRY" 2>&1>/dev/null; then
       crontab -l | grep -v "$CRON_ENTRY" > "$CRONTAB_TMP"
       crontab < "$CRONTAB_TMP"
-    #   rm "$CRONTAB_TMP"
+      rm "$CRONTAB_TMP"
     else
       echo 'Not running'
     fi

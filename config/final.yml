@@ -1,6 +1,6 @@
 ---
 blobstore:
-  provider: local
+  provider: s3
   options:
-    blobstore_path: /tmp/cfbackup-blobs
-final_name: cfbackup_blobstore
+    bucket_name: pcfbackup-blobs
+final_name: pcfbackup

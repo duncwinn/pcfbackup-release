@@ -1,24 +1,18 @@
 ---
 name: pcfbackup
-director_uuid: 845bd688-885c-4a1a-9cc3-5e133121884b
+director_uuid: 1814d7a5-6a04-4201-adb1-d6e38cb4fb14
 
 properties:
   backup:
-    ops_manager:
-      tempest_password: secretTempest
-      password: consoleSecret
-      host: opsmgr.cf.nono.com
-    s3:
-      bucket: markalston
-      # folder: backup/spike
-      access-key-id: secret
-      secret-access-key: secret
-      # kms-key-id: "arn:aws:kms:us-east-1:697686265700:key/d3d70250-6d89-4e92-8856-42285c93c78a"
-      # proxy-host: www-proxy.lmig.com # use app in real envs
-      # proxy-port: 80
+    schedule: "*/5 * * * *"
+    opsmanagerhost: "opsmgr.cf.nono.com"
+    adminuser: admin
+    adminpass: admin
+    opsmanageruser: ubuntu
+    opsmanagerpass: ubuntu
 
 releases:
-- name: cfbackup
+- name: pcfbackup
   version: latest
 
 update:
@@ -36,13 +30,13 @@ compilation:
 
 jobs:
 - instances: 1
-  name: cfbackup
+  name: pcfbackup
   networks:
   - name: default
     static_ips:
     - 10.244.2.226
   resource_pool: default
-  template: cfbackup
+  template: pcfbackup
 
 resource_pools:
 - cloud_properties:

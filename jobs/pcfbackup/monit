@@ -1,0 +1,8 @@
+check process backup-ctl
+    with pidfile "/var/vcap/sys/run/pcfbackup/pid"
+    start program "/var/vcap/jobs/pcfbackup/bin/ctl start"
+    stop program "/var/vcap/jobs/pcfbackup/bin/ctl stop"
+    group vcap
+
+check file backup-log with path "/var/vcap/sys/log/pcfbackup/backup.log"
+    if timestamp > 24 hours then alert

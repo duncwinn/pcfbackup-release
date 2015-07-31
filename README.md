@@ -51,10 +51,10 @@ blobs/
 ```
 
 Download and add dependencies:
-* [cfops_linux_amd64.tar.gz](http://s3.amazonaws.com/pivotal-cfops/release/v0.0.57/cfops_linux_amd64.tar.gz)
+* [cfops_linux_amd64.tar.gz](http://s3.amazonaws.com/pivotal-cfops/release/v1.0.0/cfops_linux_amd64.tar.gz)
 ```
-wget http://s3.amazonaws.com/pivotal-cfops/release/v0.0.57/cfops_linux_amd64.tar.gz -O cfops_linux_amd64-0.0.57.tar.gz
-bosh add blob cfops_linux_amd64-0.0.57.tar.gz cfops_linux_amd64
+wget https://github.com/pivotalservices/cfops/releases/download/v1.0.0/cfops_linux_amd64.tar.gz -O cfops_linux_amd64-1.0.0.tar.gz
+bosh add blob cfops_linux_amd64-1.0.0.tar.gz cfops_linux_amd64
 ```
 * [Python-2.7.8.tgz](https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz)
 ```

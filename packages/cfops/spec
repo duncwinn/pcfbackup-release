@@ -4,4 +4,4 @@ name: cfops
 dependencies: []
 
 files:
-- cfops_linux_amd64/cfops_linux_amd64-0.0.57.tar.gz
+- cfops_linux_amd64/cfops_linux_amd64-1.0.0.tar.gz

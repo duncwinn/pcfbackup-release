@@ -1,0 +1,31 @@
+---
+name: pcfbackup
+
+templates:
+  ctl.erb: bin/ctl
+  backup.sh.erb: bin/backup
+  backup.cron.erb: config/backup.cron
+
+packages:
+- cfops
+# - aws-cli
+# - python
+
+properties:
+  backup.schedule:
+    description: Cron formatted schedule for running the Ops Manager backup
+    default: 0 0 * * *
+  backup.opsmanagerhost:
+    description: Ops Manager host
+  backup.adminuser:
+    description: Ops Manager UI username
+  backup.adminpass:
+    description: Ops Manager UI password
+  backup.opsmanageruser:
+    description: Ops Manager ssh username
+    default: ubuntu
+  backup.opsmanagerpass:
+    description: Ops Manager ssh password
+  backup.tilelist:
+    description: a csv list of the tiles you would like to run the operation on
+    default: "opsmanager, er"
