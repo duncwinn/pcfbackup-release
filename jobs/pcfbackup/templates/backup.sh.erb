@@ -3,11 +3,11 @@
 # this would run a backup
 mkdir -p /var/vcap/data/pcfbackup
 
-/var/vcap/packages/cfops/cfops_linux_amd64/cfops backup \
+/var/vcap/packages/cfops/cfops_linux_amd64/cfops --logLevel debug backup \
     --opsmanagerhost <%= p("backup.opsmanagerhost") %> \
     --adminuser <%= p("backup.adminuser") %> \
     --adminpass <%= p("backup.adminpass") %> \
     --opsmanageruser <%= p("backup.opsmanageruser") %> \
     --opsmanagerpass <%= p("backup.opsmanagerpass") %> \
     -d /var/vcap/data/pcfbackup/ \
-    --tl <%= p("backup.tilelist") %>
+    --tl "<%= p("backup.tilelist") %>"
