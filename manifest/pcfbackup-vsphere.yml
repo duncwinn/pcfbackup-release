@@ -1,0 +1,81 @@
+---
+name: pcfbackup
+director_uuid: 6b81900e-6a70-4b1b-b37c-68fe63a3ba04
+releases:
+- name: pcfbackup
+  version: 0+dev.5
+networks:
+- name: default
+  subnets:
+  - range: 10.9.8.0/24
+    gateway: 10.9.8.1
+    dns:
+    - 8.8.8.8
+    static:
+    - 10.9.8.212
+    - 10.9.8.213
+    - 10.9.8.214
+    - 10.9.8.215
+    reserved:
+    - 10.9.8.2-10.9.8.211
+    - 10.9.8.226-10.9.8.254
+    cloud_properties:
+      name: VM Network
+resource_pools:
+- name: pcfbackup-rp
+  stemcell:
+    name: bosh-vsphere-esxi-ubuntu-trusty-go_agent
+    version: '2989'
+  network: default
+  cloud_properties:
+    ram: 2048
+    disk: 2048
+    cpu: 1
+    datacenters:
+    - clusters:
+      - Cluster:
+          resource_pool:
+  env: {}
+compilation:
+  reuse_compilation_vms: true
+  workers: 1
+  network: default
+  cloud_properties:
+    ram: 1024
+    disk: 4096
+    cpu: 2
+update:
+  canaries: 1
+  canary_watch_time: 30000-300000
+  update_watch_time: 30000-300000
+  max_in_flight: 1
+  max_errors: 2
+  serial: true
+jobs:
+- name: pcfbackup-rp
+  templates:
+  - name: pcfbackup
+    release: pcfbackup
+  instances: 1
+  resource_pool: pcfbackup-rp
+  networks:
+  - name: default
+    default:
+    - dns
+    - gateway
+    static_ips:
+    - 10.9.8.212
+  properties:
+    backup:
+      schedule: "*/5 * * * *"
+      opsmanagerhost: "opsmgr.cf.nono.com"
+      adminuser: admin
+      adminpass: admin
+      opsmanageruser: ubuntu
+      opsmanagerpass: ubuntu
+  update:
+    max_in_flight: 1
+  persistent_disk_pool: pcfbackup-rp
+disk_pools:
+- name: pcfbackup-rp
+  disk_size: 40000
