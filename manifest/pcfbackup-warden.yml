@@ -4,12 +4,16 @@ director_uuid: 1814d7a5-6a04-4201-adb1-d6e38cb4fb14
 
 properties:
   backup:
-    schedule: "*/5 * * * *"
+    schedule: "*/3 * * * *"
     opsmanagerhost: "opsmgr.cf.nono.com"
     adminuser: admin
     adminpass: admin
     opsmanageruser: ubuntu
     opsmanagerpass: ubuntu
+    s3:
+      access-key-id: something
+      secret-access-key: something
+      bucket: pcfbackup-files
 
 releases:
 - name: pcfbackup

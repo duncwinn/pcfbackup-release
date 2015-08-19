@@ -8,8 +8,8 @@ templates:
 
 packages:
 - cfops
-# - aws-cli
-# - python
+- aws-cli
+- python
 
 properties:
   backup.schedule:
@@ -32,3 +32,12 @@ properties:
   backup.tilelist:
     description: a csv list of the tiles you would like to run the operation on
     default: "opsmanager, er"
+  backup.s3.access-key-id:
+    description: AWS access key ID
+  backup.s3.secret-access-key:
+    description: AWS secret access key
+  backup.s3.region:
+    description: AWS default region
+    default: "us-east-1"
+  backup.s3.bucket:
+    decription: S3 bucket name for storing backup
