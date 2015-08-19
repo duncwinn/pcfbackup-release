@@ -2,21 +2,24 @@
 
 set -ex
 
-PIDFILE=/var/vcap/sys/run/cfops/cfops.pid
+CFOPS_PIDFILE=/var/vcap/sys/run/cfops/cfops.pid
+AWS_PIDFILE=/var/vcap/sys/run/aws/aws.pid
 
-mkdir -p `dirname "$PIDFILE"`
-chown vcap:vcap `dirname "$PIDFILE"`
+mkdir -p `dirname "$CFOPS_PIDFILE"`
+chown vcap:vcap `dirname "$CFOPS_PIDFILE"`
 
 export BACKUP_DIR=<%= p("backup.directory") %>
 export PATH=/var/vcap/packages/cfops/cfops_linux_amd64:/var/vcap/packages/aws-cli/bin:$PATH
+export UPLOAD_DIR=<%= p("backup.directory") %>_upload
 
 if [ ! -d "$BACKUP_DIR" ]; then
   mkdir -p $BACKUP_DIR
 
   /sbin/start-stop-daemon \
-      --pidfile $PIDFILE \
+      --pidfile $CFOPS_PIDFILE \
       --exec /bin/bash \
       --make-pidfile \
+      --oknodo \
       --start \
       -- -c "cfops --logLevel debug backup \
         --opsmanagerhost <%= p("backup.opsmanagerhost") %> \
@@ -27,20 +30,31 @@ if [ ! -d "$BACKUP_DIR" ]; then
         -d $BACKUP_DIR \
         --tl '<%= p("backup.tilelist") %>'
       "
+  cp -R  $BACKUP_DIR $UPLOAD_DIR
 fi
 
 export AWS_ACCESS_KEY_ID=<%= p("backup.s3.access-key-id") %>
 export AWS_SECRET_ACCESS_KEY=<%= p("backup.s3.secret-access-key") %>
 export AWS_DEFAULT_REGION=<%= p("backup.s3.region") %>
 
+mkdir -p `dirname "$AWS_PIDFILE"`
+chown vcap:vcap `dirname "$AWS_PIDFILE"`
+
 # aws s3 cp \
 #     $BACKUP_DIR \
 #     <%= p("backup.s3.bucket") %> \
 #     --recursive
-if [ -d "$BACKUP_DIR" ]; then
-  aws s3 sync \
-      $BACKUP_DIR \
-      s3://<%= p("backup.s3.bucket") %>
+if [ -d "$UPLOAD_DIR" ]; then
+  /sbin/start-stop-daemon \
+      --pidfile $AWS_PIDFILE \
+      --exec /bin/bash \
+      --make-pidfile \
+      --oknodo \
+      --start \
+      -- -c "aws s3 sync \
+          $UPLOAD_DIR \
+          s3://<%= p("backup.s3.bucket") %>
+      "
+  rm -rf  $UPLOAD_DIR
+  rm -rf $BACKUP_DIR
 fi
-
-rm -rf  $BACKUP_DIR
