@@ -30,6 +30,10 @@ if [ ! -d "$BACKUP_DIR" ]; then
         -d $BACKUP_DIR \
         --tl '<%= p("backup.tilelist") %>'
       "
+  if [ "$?" -ne "0" ]; then
+    echo "cfops is currently running..."
+    exit 1
+  fi
   cp -R  $BACKUP_DIR $UPLOAD_DIR
 fi
 
@@ -55,6 +59,12 @@ if [ -d "$UPLOAD_DIR" ]; then
           $UPLOAD_DIR \
           s3://<%= p("backup.s3.bucket") %>
       "
+  if [ "$?" -ne "0" ]; then
+    echo "aws sync is currently running..."
+    exit 1
+  fi
   rm -rf  $UPLOAD_DIR
   rm -rf $BACKUP_DIR
 fi
+
+exit 0
