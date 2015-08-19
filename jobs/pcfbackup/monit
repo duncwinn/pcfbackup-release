@@ -1,5 +1,4 @@
-check process backup-ctl
-    with pidfile "/var/vcap/sys/run/pcfbackup/pid"
+check process backup-ctl with pidfile "/var/vcap/sys/run/pcfbackup/pid"
     start program "/var/vcap/jobs/pcfbackup/bin/ctl start"
     stop program "/var/vcap/jobs/pcfbackup/bin/ctl stop"
     group vcap

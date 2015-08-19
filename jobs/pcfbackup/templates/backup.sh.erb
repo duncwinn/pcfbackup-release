@@ -1,13 +1,17 @@
 #!/bin/bash
 
-# this would run a backup
-mkdir -p /var/vcap/data/pcfbackup
+set -ex
 
-/var/vcap/packages/cfops/cfops_linux_amd64/cfops --logLevel debug backup \
+export BACKUP_DIR=<%= p("backup.directory") %>
+export PATH=/var/vcap/packages/cfops/cfops_linux_amd64:$PATH
+
+mkdir -p $BACKUP_DIR
+
+cfops --logLevel debug backup \
     --opsmanagerhost <%= p("backup.opsmanagerhost") %> \
     --adminuser <%= p("backup.adminuser") %> \
     --adminpass <%= p("backup.adminpass") %> \
     --opsmanageruser <%= p("backup.opsmanageruser") %> \
     --opsmanagerpass <%= p("backup.opsmanagerpass") %> \
-    -d /var/vcap/data/pcfbackup/ \
+    -d $BACKUP_DIR \
     --tl "<%= p("backup.tilelist") %>"

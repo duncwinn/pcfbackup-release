@@ -15,6 +15,9 @@ properties:
   backup.schedule:
     description: Cron formatted schedule for running the Ops Manager backup
     default: 0 0 * * *
+  backup.directory:
+    description: Directory to stage the backup files prior to sending them to backup location like an s3 compat blobstore
+    default: /var/vcap/data/pcfbackup
   backup.opsmanagerhost:
     description: Ops Manager host
   backup.adminuser:

@@ -4,6 +4,7 @@ RUN_DIR='/var/vcap/sys/run/pcfbackup'
 LOG_DIR='/var/vcap/sys/log/pcfbackup'
 PIDFILE="$RUN_DIR/pid"
 
+CRON_STATUS=`pgrep cron | wc -l`
 CRON_ENTRY=$(cat /var/vcap/jobs/pcfbackup/config/backup.cron)
 CRONTAB_TMP="$RUN_DIR/crontab.$$.tmp"
 
@@ -15,6 +16,10 @@ case $1 in
     chown -R vcap:vcap "$RUN_DIR" "$LOG_DIR"
 
     echo $$ > $PIDFILE
+
+    if [ $CRON_STATUS -eq 0 ]; then
+      /usr/sbin/cron start
+    fi
 
     if crontab -l | sed -e 's/^#.*//' | grep "$CRON_ENTRY" 2>&1>/dev/null; then
       echo 'Already running'
