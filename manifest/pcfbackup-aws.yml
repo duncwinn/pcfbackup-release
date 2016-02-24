@@ -1,0 +1,84 @@
+---
+name: pcfbackup
+director_uuid: [REPLACE WITH YOUR DIRECTOR UUID]
+releases:
+- name: pcfbackup
+  version: 0+dev.1
+networks:
+- name: default
+  subnets:
+  - range: 10.0.16.0/20
+    gateway: 10.0.16.1
+    dns:
+    - 10.0.0.2
+    static:
+    - 10.0.16.212
+    - 10.0.16.213
+    - 10.0.16.214
+    - 10.0.16.215
+    reserved:
+    - 10.0.16.2-10.0.16.211
+    - 10.0.16.226-10.0.16.254
+    cloud_properties:
+      subnet: [REPLACE WITH YOUR SUBNET]
+resource_pools:
+- name: pcfbackup-rp
+  stemcell:
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: '3146'
+  network: default
+  cloud_properties:
+    instance_type: c4.large
+    availability_zone: us-west-2b
+    ephemeral_disk:
+      size: 20480
+      type: gp2
+compilation:
+  reuse_compilation_vms: true
+  workers: 1
+  network: default
+  cloud_properties:
+    instance_type: c4.large
+    availability_zone: us-west-2b
+    ephemeral_disk:
+      size: 20480
+      type: gp2
+update:
+  canaries: 1
+  canary_watch_time: 30000-300000
+  update_watch_time: 30000-300000
+  max_in_flight: 1
+  max_errors: 2
+  serial: true
+jobs:
+- name: pcfbackup-rp
+  templates:
+  - name: pcfbackup
+    release: pcfbackup
+  instances: 1
+  resource_pool: pcfbackup-rp
+  networks:
+  - name: default
+    default:
+    - dns
+    - gateway
+    static_ips:
+    - 10.0.16.212
+  properties:
+    backup:
+      schedule: "*/5 * * * *"
+      opsmanagerhost: "opsmgr.cf.nono.com"
+      adminuser: admin
+      adminpass: admin
+      opsmanageruser: ubuntu
+      opsmanagerpass: ubuntu
+      s3:
+        access-key-id: 
+        secret-access-key: 
+        bucket: 
+  update:
+    max_in_flight: 1
+  persistent_disk_pool: pcfbackup-rp
+disk_pools:
+- name: pcfbackup-rp
+  disk_size: 40000
