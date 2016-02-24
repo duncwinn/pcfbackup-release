@@ -66,6 +66,9 @@ bosh add blob Python-2.7.8.tgz python
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 bosh add blob awscli-bundle.zip aws-cli
 ```
+wget https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_65.tar.gz
+bosh add blob openjdk-1.8.0_65.tar.gz openjdk-1.8.0_65
+```
 
 #### Upload the PCF Backup release
 
